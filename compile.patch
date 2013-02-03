@@ -1,0 +1,59 @@
+diff -up xf86-input-mtrack-20120115/include/common.h.patch1 xf86-input-mtrack-20120115/include/common.h
+--- xf86-input-mtrack-20120115/include/common.h.patch1	2012-02-27 20:41:57.698656744 +0100
++++ xf86-input-mtrack-20120115/include/common.h	2012-02-27 20:42:46.026654576 +0100
+@@ -33,6 +33,7 @@
+ #include <xf86Xinput.h>
+ #include <errno.h>
+ #include <mtdev-mapping.h>
++#include <mtdev-plumbing.h>
+ #include <stdint.h>
+ 
+ #define DIM_FINGER 32
+@@ -84,7 +85,7 @@ static inline int bitcount(unsigned v)
+ 
+ /* boost-style foreach bit */
+ #define foreach_bit(i, m)						\
+-	for (i = firstbit(m); i >= 0; i = firstbit((m) & (~0U << i + 1)))
++	for (i = firstbit(m); i >= 0; i = firstbit((m) & (~0U << (i + 1))))
+ 
+ /* robust system ioctl calls */
+ #define SYSCALL(call) while (((call) == -1) && (errno == EINTR))
+diff -up xf86-input-mtrack-20120115/src/mtstate.c.patch1 xf86-input-mtrack-20120115/src/mtstate.c
+--- xf86-input-mtrack-20120115/src/mtstate.c.patch1	2012-02-27 20:42:11.962656104 +0100
++++ xf86-input-mtrack-20120115/src/mtstate.c	2012-02-27 20:42:46.029654576 +0100
+@@ -71,8 +71,10 @@ static int is_thumb(const struct MConfig
+ 
+ 	int min = MINVAL(hw->touch_minor, hw->touch_major);
+ 	int max = MAXVAL(hw->touch_minor, hw->touch_major);
+-	int pct = percentage(min, max);
+ 	int size = touch_range_ratio(cfg, hw->touch_major);
++#if DEBUG_MTSTATE
++	int pct = percentage(min, max);
++#endif
+ 
+ 	if (percentage(min, max) > cfg->thumb_ratio && size > cfg->thumb_size) {
+ #if DEBUG_MTSTATE
+diff -up xf86-input-mtrack-20120115/tools/mtrack-test.c.patch1 xf86-input-mtrack-20120115/tools/mtrack-test.c
+--- xf86-input-mtrack-20120115/tools/mtrack-test.c.patch1	2012-02-27 20:42:23.971655565 +0100
++++ xf86-input-mtrack-20120115/tools/mtrack-test.c	2012-02-27 20:42:46.031654576 +0100
+@@ -32,17 +32,17 @@ void xf86Msg(int type, const char *forma
+ 	va_end(args);
+ }
+ 
+-int xf86SetIntOption(pointer opts, const char *name, int deflt)
++int xf86SetIntOption(XF86OptionPtr opts, const char *name, int deflt)
+ {
+ 	return deflt;
+ }
+ 
+-int xf86SetBoolOption(pointer opts, const char *name, int deflt)
++int xf86SetBoolOption(XF86OptionPtr opts, const char *name, int deflt)
+ {
+ 	return deflt;
+ }
+ 
+-double xf86SetRealOption(pointer opts, const char *name, double deflt)
++double xf86SetRealOption(XF86OptionPtr opts, const char *name, double deflt)
+ {
+ 	return deflt;
+ }
