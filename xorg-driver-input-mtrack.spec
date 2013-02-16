@@ -1,5 +1,5 @@
 %define		subver 20120115
-%define		rel		1
+%define		rel		2
 Summary:	Multitouch X input driver
 Name:		xorg-driver-input-mtrack
 Version:	1.0
@@ -42,8 +42,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_datadir}/X11/xorg.conf.d
-cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/X11/xorg.conf.d/40-xf86-input-mtrack.conf
+install -d $RPM_BUILD_ROOT/etc/X11/xorg.conf.d
+cp -p %{SOURCE1} $RPM_BUILD_ROOT/etc/X11/xorg.conf.d/40-xf86-input-mtrack.conf
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/xorg/modules/input/*.la
 
@@ -53,5 +53,5 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.md CREDITS
-%{_datadir}/X11/xorg.conf.d/40-xf86-input-mtrack.conf
+%config(noreplace) %verify(not md5 mtime size) /etc/X11/xorg.conf.d/40-xf86-input-mtrack.conf
 %attr(755,root,root) %{_libdir}/xorg/modules/input/mtrack_drv.so
