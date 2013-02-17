@@ -1,16 +1,14 @@
-%define		subver 20120115
-%define		rel		2
 Summary:	Multitouch X input driver
 Name:		xorg-driver-input-mtrack
-Version:	1.0
-Release:	0.rc2.%{subver}.%{rel}
+Version:	0.3.0
+Release:	1
+Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 URL:		https://github.com/BlueDragonX/xf86-input-mtrack
-Source0:	xf86-input-mtrack-%{subver}.tar.bz2
-# Source0-md5:	7de920ea9bdd3dabf335a02a03755e99
+Source0:	https://github.com/BlueDragonX/xf86-input-mtrack/archive/v%{version}.tar.gz?/mtrack-%{version}.tgz
+# Source0-md5:	111803d7728036d3ab75c587adf23130
 Source1:	xf86-input-mtrack.conf
-Patch0:		compile.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
@@ -25,8 +23,7 @@ This X input driver provides gestures support for multitouch
 touchpads, in particular those with integrated button.
 
 %prep
-%setup -q -n xf86-input-mtrack-%{subver}
-%patch0 -p1
+%setup -q -n xf86-input-mtrack-%{version}
 
 %build
 %{__libtoolize}
