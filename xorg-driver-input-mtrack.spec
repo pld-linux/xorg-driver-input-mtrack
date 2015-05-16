@@ -1,13 +1,13 @@
 Summary:	Multitouch X input driver
 Name:		xorg-driver-input-mtrack
-Version:	0.3.0
-Release:	5
+Version:	0.3.1
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 URL:		https://github.com/BlueDragonX/xf86-input-mtrack
 Source0:	https://github.com/BlueDragonX/xf86-input-mtrack/archive/v%{version}.tar.gz?/mtrack-%{version}.tgz
-# Source0-md5:	111803d7728036d3ab75c587adf23130
+# Source0-md5:	cc99ea395ec588a790d2145815f48fa2
 Source1:	xf86-input-mtrack.conf
 BuildRequires:	autoconf
 BuildRequires:	automake
