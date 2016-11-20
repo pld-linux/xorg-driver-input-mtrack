@@ -1,7 +1,7 @@
 Summary:	Multitouch X input driver
 Name:		xorg-driver-input-mtrack
 Version:	0.3.1
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
